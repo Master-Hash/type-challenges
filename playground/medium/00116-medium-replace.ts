@@ -18,7 +18,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Replace<S extends string, From extends string, To extends string> = any
+type Replace<S extends string, From extends string, To extends string> = S extends `${infer Heads}${From extends "" ? never : From}${infer Tails}`
+  ? `${Heads}${To}${Tails}`
+  : S
+
+type Fuck = Replace<'foobar', 'bar', 'foo'>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

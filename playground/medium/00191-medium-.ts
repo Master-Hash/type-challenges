@@ -23,7 +23,8 @@
 
 /* _____________ 你的代码 _____________ */
 
-type AppendArgument<Fn, A> = any
+type AppendArgument<Fn extends (...args: any[]) => unknown, A> = Fn extends (...args: infer Ps) => infer R
+  ? (...args: [...Ps, A]) => R : never
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -40,6 +41,8 @@ type cases = [
   // @ts-expect-error
   AppendArgument<unknown, undefined>,
 ]
+
+const myf: AppendArgument<(a: number, b: string) => number, boolean> = (a, b, x) => parseInt(`${a}${b}${x}`)
 
 /* _____________ 下一步 _____________ */
 /*

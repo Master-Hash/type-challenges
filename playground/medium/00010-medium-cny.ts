@@ -20,7 +20,8 @@
 
 /* _____________ 你的代码 _____________ */
 
-type TupleToUnion<T> = any
+// type TupleToUnion<T extends ReadonlyArray<any>> = T[number]
+type TupleToUnion<T> = T extends Array<infer Items> ? Items : never
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -29,6 +30,16 @@ type cases = [
   Expect<Equal<TupleToUnion<[123, '456', true]>, 123 | '456' | true>>,
   Expect<Equal<TupleToUnion<[123]>, 123>>,
 ]
+
+const v1 = [1, 2, '3'] as const
+
+// never
+type t1 = TupleToUnion<typeof v1>
+
+type TupleToUnion2<T extends readonly any[]> = T[number]
+
+// 1 | 2 | "3"
+type t2 = TupleToUnion2<typeof v1>
 
 /* _____________ 下一步 _____________ */
 /*

@@ -24,7 +24,7 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Last<T extends any[]> = any
+type Last<T extends ReadonlyArray<any>> = T extends [...infer _, infer Tail] ? Tail : never
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

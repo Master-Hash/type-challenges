@@ -23,7 +23,14 @@
 
 /* _____________ 你的代码 _____________ */
 
-declare function PromiseAll(values: any): any
+declare function PromiseAll<T extends any[]>(values: readonly [...T]): Promise<{
+  [key in keyof T]: Awaited<T[key]>
+}>
+
+const tttest = ([1, 2, 3]) as const
+type tt = {}
+
+type TTTT = typeof promiseAllTest1
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

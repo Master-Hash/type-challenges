@@ -26,7 +26,7 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Pop<T extends any[]> = any
+type Pop<T extends ReadonlyArray<any>> = T extends [...infer Heads, infer _] ? Heads : []
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

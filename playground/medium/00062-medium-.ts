@@ -29,7 +29,9 @@
 
 /* _____________ 你的代码 _____________ */
 
-type LookUp<U, T> = any
+type LookUp<U, T extends string> = {
+  [key in T]: U extends { type: T } ? U : never
+}[T]
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
