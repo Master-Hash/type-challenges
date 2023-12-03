@@ -18,7 +18,15 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Flatten = any
+type Flatten<T extends unknown[]> = T extends [infer head, ...infer tails]
+  // 不是空的
+  ? head extends unknown[]
+  ? [...Flatten<head>, ...Flatten<tails>]
+  : [head, ...Flatten<tails>]
+  // 空的
+  : []
+
+type a = Flatten<[1, 2, [3, 4], [[[5]]]]>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

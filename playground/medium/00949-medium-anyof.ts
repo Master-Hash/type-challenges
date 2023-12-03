@@ -19,7 +19,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type AnyOf<T extends readonly any[]> = any
+type isEmptyObject = { name: "space" } extends Object ? true : false
+
+type Boolable = number | string | boolean | null | undefined | Array<Boolable> | {}
+
+type AnyOf<T extends readonly Boolable[]> = T extends Array<0 | '' | false | [] | null | undefined | Record<string, never>> ? false : true
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
